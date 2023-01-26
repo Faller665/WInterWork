@@ -80,7 +80,7 @@ private Button register;
         password.bringToFront();
     }
 //    下载图片
-    private void loadPhoto(){
+    public void loadPhoto(){
         OkHttpClient client = new OkHttpClient();
         Request.Builder RequestBuilder=new Request.Builder();
         RequestBuilder.addHeader("token","RAOQHDgr4TZmvLkl");
@@ -141,9 +141,8 @@ private Button register;
 
                         int errorCode=jsonObject.getInt("errorCode");
                         if(errorCode==0){
-
-                            Intent intent=new Intent(Login.this,MainActivity.class);
-                            startActivity(intent);
+                         Intent intent=new Intent(Login.this,Main.class);
+                         startActivity(intent);
                         }
                         else{
                             Toast.makeText(Login.this, "账号或者密码不匹配或者该账号未注册", Toast.LENGTH_SHORT).show();

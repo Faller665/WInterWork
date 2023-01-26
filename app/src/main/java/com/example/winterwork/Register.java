@@ -3,6 +3,7 @@ package com.example.winterwork;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -76,6 +77,8 @@ private String registerJson;
                         JSONObject jsonObject=new JSONObject(registerJson);
                         int errorCode=jsonObject.getInt("errorCode");
                         if(errorCode==0){
+                            Intent intent=new Intent(Register.this,Login.class);
+                            startActivity(intent);
                             Toast.makeText(Register.this, "注册成功", Toast.LENGTH_SHORT).show();
                         }
                         else{

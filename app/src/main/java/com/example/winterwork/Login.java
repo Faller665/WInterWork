@@ -80,7 +80,7 @@ private Button register;
         password.bringToFront();
     }
 //    下载图片
-    public void loadPhoto(){
+    public void loadPhoto(){try {
         OkHttpClient client = new OkHttpClient();
         Request.Builder RequestBuilder=new Request.Builder();
         RequestBuilder.addHeader("token","RAOQHDgr4TZmvLkl");
@@ -97,22 +97,26 @@ private Button register;
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-               PhotoJson=response.body().string();
+                PhotoJson=response.body().string();
                 try {
                     JSONObject jsonObject=new JSONObject(PhotoJson);
                     JSONObject data1=jsonObject.getJSONObject("data");
                     String address=data1.getString("url");
-                   runOnUiThread(new Runnable() {
-                       @Override
-                       public void run() {
-                           Glide.with(Login.this).load(address).into(background1);
-                       }
-                   });
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Glide.with(Login.this).load(address).into(background1);
+                        }
+                    });
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
     }
 
     private void login(){
@@ -136,17 +140,22 @@ private Button register;
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     LoginJson=response.body().string();
                     try {
-                        Log.d("TAG", "onResponse: "+LoginJson);
                         JSONObject jsonObject=new JSONObject(LoginJson);
 
                         int errorCode=jsonObject.getInt("errorCode");
-                        if(errorCode==0){
-                         Intent intent=new Intent(Login.this,Main.class);
-                         startActivity(intent);
-                        }
-                        else{
-                            Toast.makeText(Login.this, "账号或者密码不匹配或者该账号未注册", Toast.LENGTH_SHORT).show();
-                        }
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if(errorCode==0){
+                                    Intent intent=new Intent(Login.this,Main.class);
+                                    startActivity(intent);
+                                }
+                                else{
+                                    Toast.makeText(Login.this, "账号或者密码不匹配或者该账号未注册", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

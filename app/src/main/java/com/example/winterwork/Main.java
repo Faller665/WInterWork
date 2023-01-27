@@ -81,12 +81,7 @@ private ArrayList<BackInterface> data;
                         JSONObject today=daily_forecast.getJSONObject(i);
                          weather=today.getString("cond_txt_n");
                     }
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                         Weather.setText(weather);
-                        }
-                    });
+                   Weather.setText(weather);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
